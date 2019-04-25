@@ -20,10 +20,10 @@ public class Client {
     public String getName(){
         return name;
     }
-
     public String getContact(){
         return contact;
     }
+    public int getStylist_id() {return stylist_id;}
 
     //return stylist Id
     public Stylist getStylist() {
@@ -78,7 +78,6 @@ public class Client {
                     .addParameter("name", name)
                     .addParameter("contact", contact)
                     .addParameter("stylist_id", stylist_id)
-                    .addParameter("id", id)
                     .executeUpdate();
         }
     }
