@@ -11,20 +11,20 @@ public class ClientTest {
 
     @Test
     public void savingClient_true() {
-        Client client = new Client("1, Wanja", "0700100000", 2);
+        Client client = new Client("Wanja", "0700100000", 2, 1);
         client.save();
         assertEquals("Wanja", client.getName());
     }
 
     @Test
     public void findCLient_true() {
-        Client client = new Client("Wanja","0700100000", 2);
+        Client client = new Client("Wanja","0700100000", 2, 1);
         assertEquals("Wanja", Client.find(client.getId()).getName());
     }
     // updating client test
     @Test
     public void updatingClient_true() {
-        Client client = new Client("Wanja","0700100000", 2);
+        Client client = new Client("Wanja","0700100000", 2, 1);
         client.update("Brandon", "0700200000", 2);
         assertEquals("Brandon", Client.find(client.getId()).getName());
         assertEquals("0700200000", Client.find(client.getId()).getContact());
@@ -33,7 +33,7 @@ public class ClientTest {
     //delete client test
     @Test
     public void delete_deletesClient_true() {
-        Client client = new Client("Wanja","0700100000", 2);
+        Client client = new Client("Wanja","0700100000", 2,1);
         int clientId = client.getId();
         client.delete();
         assertEquals(null, Client.find(clientId));
