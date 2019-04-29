@@ -8,7 +8,7 @@ public class Client {
     private String contact;
     private int stylist_id;
     // client constuructor
-    public Client(String name, String contact, int stylist_id, int id) {
+    public Client(int id, String name, String contact, int stylist_id) {
         this.name = name;
         this.contact = contact;
         this.stylist_id = stylist_id;
@@ -34,7 +34,7 @@ public class Client {
             stylist = new Stylist("","",stylist_id);
         } else {
             try(Connection con = DB.sql2o.open()) {
-                String sql = "SELECT * FROM stylists where id=:id";
+                String sql = "SELECT * FROM stylists where id=:stylist_id";
                 stylist = con.createQuery(sql)
                         .addParameter("name", client_id)
                         .executeAndFetchFirst(Stylist.class); }
@@ -44,7 +44,7 @@ public class Client {
 
     public static Client find(int id) {
         try(Connection con = DB.sql2o.open()) {
-            String sql = "SELECT * FROM clients where id=:id";
+            String sql = "SELECT * FROM clients where id=:stylist_id";
             Client client = con.createQuery(sql)
                     .addParameter("name", id)
                     .executeAndFetchFirst(Client.class);

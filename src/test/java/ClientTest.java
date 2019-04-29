@@ -16,6 +16,7 @@ public class ClientTest {
         assertEquals("Wanja", client.getName());
     }
 
+
     @Test
     public void findCLient_true() {
         Client client = new Client("Wanja","0700100000", 2, 1);
