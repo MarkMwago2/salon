@@ -1,14 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Welcome to THEE SALON</title>
-    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+    <base href="/">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Hair Salon app</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link href="MDN/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link rel='stylesheet' href='MDN/css/mdb.min.css'>
+    <link rel='stylesheet' href='MDN/css/mdb.css'>
+    <!-- Your custom styles (optional) -->
+
+    <link rel='stylesheet' href='/app.css'>
+    <link href="https://fonts.googleapis.com/css?family=Courgette|Handlee|Josefin+Sans|Julius+Sans+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Merienda" rel="stylesheet">
 </head>
 <body>
-<div class="container">
 
-    #parse( $template )
+<nav class="navbar navbar-expand-lg navbar-light bg-info">
+    <a class="navbar-brand" href="/"> <img class="logo" src="images/logo.png" alt="Logo"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Stylists
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/stylists">View Stylists</a>
+                    <a class="dropdown-item" href="/stylists/new
+              ">Add Stylist</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Clients</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search Stylists or Clients" aria-label="Search">
+            <button class="btn aqua-gradient my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+#parse( $template )
 
-</div>
+<!-- SCRIPTS -->
+<!-- JQuery -->
+<script type="text/javascript" src="MDN/js/jquery-3.3.1.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="MDN/js/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="MDN/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="MDN/js/mdb.min.js"></script>
 </body>
+
 </html>
+
+
