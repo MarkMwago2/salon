@@ -12,7 +12,7 @@ public class App {
         if (process.environment().get("PORT") != null) {
             port = Integer.parseInt(process.environment().get("PORT"));
         } else {
-            port = 4567;
+            port = 5432;
         }
 
         setPort(port);
