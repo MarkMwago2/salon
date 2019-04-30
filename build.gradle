@@ -1,8 +1,10 @@
 apply plugin: 'java'
+apply plugin: 'java'
 apply plugin: 'application'
 
 archivesBaseName = "salon"
 version = '1.0'
+applicationName = "salon"
 mainClassName = "App"
 
 repositories {
@@ -17,3 +19,5 @@ dependencies {
     compile group: 'org.postgresql', name: 'postgresql', version: "9.4-1201-jdbc41"
 }
 
+defaultTasks = ['clean']
+task stage(dependsOn: ['clean', 'installDist'])
