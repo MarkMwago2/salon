@@ -14,7 +14,7 @@ Follow the following setup instructions to run the program.:
 
 2.Install the java software development kit (sdk), java and gradle respectively
 
-3.Git clone https://github.com/Bihengoto/hairSalon.git
+3.Git clone https://github.com/MarkMwago2/salon
 
 4.cd into the cloned directory and open with preferred java text editor
 
