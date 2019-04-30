@@ -59,4 +59,5 @@ Support and Contact Details
 For more information on the application or if you may come across any issues you can contact me via email at markmwagoo@gmail.com
 
 License
+
 *Hero Squad was released under MIT
