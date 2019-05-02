@@ -11,7 +11,7 @@ public class DB {
 
         try {
             if (System.getenv("DATABASE_URL") == null) {
-                dbUri = new URI("postgres://localhost:5432/salon");
+                dbUri = new URI("postgres://localhost:5432/wildlifetracker");
             } else {
                 dbUri = new URI(System.getenv("DATABASE_URL"));
             }

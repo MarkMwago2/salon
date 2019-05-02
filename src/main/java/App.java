@@ -1,12 +1,13 @@
-import java.util.HashMap;
 import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
 import static spark.Spark.*;
 
 public class App {
     public static void main(String[] args) {
-
         ProcessBuilder process = new ProcessBuilder();
         Integer port;
         if (process.environment().get("PORT") != null) {
@@ -17,89 +18,107 @@ public class App {
 
         setPort(port);
 
-
         staticFileLocation("/public");
         String layout = "templates/layout.vtl";
 
         get("/", (request, response) -> {
-            HashMap<String, Object> model = new HashMap<String, Object>();
-            model.put("stylists", Stylist.all());
+            Map<String, Object> model = new HashMap<String, Object>();
+            model.put("animals", Animal.all());
+            model.put("endangered", Endangered.all());
+            model.put("sightings", Sightings.all());
             model.put("template", "templates/index.vtl");
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
 
-        get("/clients", (request, response) -> {
+        get("/sightings", (request, response) -> {
             Map<String, Object> model = new HashMap<String, Object>();
-            model.put("template", "templates/clients.vtl" );
+            model.put("animals", Animal.all());
+            model.put("endangered", Endangered.all());
+            model.put("sightings", Sightings.all());
+            model.put("template", "templates/sightings.vtl");
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
-        post("/stylists", (request, response) -> {
-            HashMap<String, Object> model = new HashMap<String, Object>();
-            String stylistName = request.queryParams("stylist-name");
-            Stylist newStylist = new Stylist(stylistName);
-            newStylist.save();
+        post("/endangered_sighting", (request, response) -> {
+            Map<String, Object> model = new HashMap<String, Object>();
+            String rangerName = request.queryParams("rangerName");
+            int animalIdSelected = Integer.parseInt(request.queryParams("endangeredAnimalSelected"));
+            String location = request.queryParams("location");
+            Sightings sighting = new Sightings(animalIdSelected, location, rangerName);
+            sighting.save();
+            model.put("sightings", sighting);
+            model.put("animals", Endangered.all());
+            String animal = Endangered.find(animalIdSelected).getName();
+            model.put("animal", animal);
+            model.put("template", "templates/success.vtl");
+            return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
+
+        post("/sighting", (request, response) -> {
+            Map<String, Object> model = new HashMap<String, Object>();
+            String rangerName = request.queryParams("rangerName");
+            int animalIdSelected = Integer.parseInt(request.queryParams("animalSelected"));
+            String location = request.queryParams("location");
+            Sightings sighting = new Sightings(animalIdSelected, location, rangerName);
+            sighting.save();
+            model.put("sighting", sighting);
+            model.put("animals", Animal.all());
+            String animal = Animal.find(animalIdSelected).getName();
+            model.put("animal", animal);
+            model.put("template", "templates/success.vtl");
+            return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
+
+        get("/animal/new", (request, response) -> {
+            Map<String, Object> model = new HashMap<String, Object>();
+            model.put("animals", Animal.all());
+            model.put("endangered", Endangered.all());
+            model.put("template", "templates/animal-form.vtl");
+            return new ModelAndView(model, layout);
+        }, new VelocityTemplateEngine());
+
+        post("/animal/new", (request, response) -> {
+            Map<String, Object> model = new HashMap<String, Object>();
+            boolean endangered = request.queryParamsValues("endangered")!=null;
+            if (endangered) {
+                String name = request.queryParams("name");
+                String health = request.queryParams("health");
+                String age = request.queryParams("age");
+                Endangered endangeredAnimal = new Endangered(name, health, age);
+                endangeredAnimal.save();
+                model.put("animals", Animal.all());
+                model.put("endangered", Endangered.all());
+            } else {
+                String name = request.queryParams("name");
+                Animal animal = new Animal(name);
+                animal.save();
+                model.put("animals", Animal.all());
+                model.put("endangered", Endangered.all());
+            }
             response.redirect("/");
             return null;
         });
 
-        get("/stylists/:id", (request, response) -> {
-            HashMap<String, Object> model = new HashMap<String, Object>();
-            Stylist existingStylist = Stylist.find(Integer.parseInt(request.params(":id")));
-            model.put("stylist", existingStylist);
-            model.put("clients", existingStylist.getClients());
-            model.put("template", "templates/clients.vtl");
+        get("/animal/:id", (request, response) -> {
+            Map<String, Object> model = new HashMap<String, Object>();
+            Animal animal = Animal.find(Integer.parseInt(request.params("id")));
+            model.put("animal", animal);
+            model.put("template", "templates/animal.vtl");
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
-        post("/clients", (request,response) -> {
-            HashMap<String, Object> model = new HashMap<String, Object>();
-            String clientName = request.queryParams("client-name");
-            Stylist stylist = Stylist.find(Integer.parseInt(request.queryParams("stylistId")));
-            Client newClient = new Client(clientName, stylist.getId());
-            newClient.save();
-            model.put("stylist", stylist);
-            String url = String.format("/stylists/%d", stylist.getId());
-            response.redirect(url);
-            return null;
-        });
-
-        get("/stylists", (request, response) -> {
-            HashMap<String, Object> model = new HashMap<String, Object>();
-            model.put("stylists", Stylist.all());
-            model.put("template", "templates/stylists.vtl");
+        get("/Endangered/:id", (request, response) -> {
+            Map<String, Object> model = new HashMap<String, Object>();
+            Endangered endangeredAnimal = Endangered.find(Integer.parseInt(request.params("id")));
+            model.put("Endangered", endangeredAnimal);
+            model.put("template", "templates/endangered.vtl");
             return new ModelAndView(model, layout);
         }, new VelocityTemplateEngine());
 
 
-        post("/stylists/:id/delete", (request, response) -> {
-            HashMap<String, Object> model = new HashMap<String, Object>();
-            Stylist stylists = Stylist.find(Integer.parseInt(request.params("id")));
-            stylists.delete();
-            response.redirect("/stylists");
-            return null;
-        });
-
-        get("/clients/:id", (request, response) -> {
-            HashMap<String, Object> model = new HashMap<String, Object>();
-            Client client = Client.find(Integer.parseInt(request.params("id")));
-            Stylist stylist = Stylist.find(client.getStylistId());
-            model.put("client", client);
-            model.put("template", "templates/updateClient.vtl");
-            return new ModelAndView(model, layout);
-        }, new VelocityTemplateEngine());
-
-        post("/clients/:id", (request, response) -> {
-            HashMap<String, Object> model = new HashMap<String, Object>();
-            Client client = Client.find(Integer.parseInt(request.params("id")));
-            Stylist stylist = Stylist.find(client.getStylistId());
-            String newName = request.queryParams("name");
-            client.update(newName);
-            model.put("stylist", stylist);
-            String url = String.format("/stylists/%d", stylist.getId());
-            response.redirect(url);
-            return null;
-        });
     }
 }
+
+
+

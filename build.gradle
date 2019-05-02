@@ -2,9 +2,9 @@ apply plugin: 'java'
 apply plugin: 'java'
 apply plugin: 'application'
 
-archivesBaseName = "salon"
+archivesBaseName = "wildlifetracker"
 version = '1.0'
-applicationName = "salon"
+applicationName = "wildlifetracker"
 mainClassName = "App"
 
 repositories {
